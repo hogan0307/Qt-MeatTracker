@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QSystemTrayIcon>
 #include <QSqlDatabase>
+#include <QTableWidgetItem>
+
 namespace Ui {
 class MainWindow;
 }
@@ -26,18 +28,15 @@ private slots:
     void on_exit();
     void on_save_clicked();
     void initStoryTable();
-
+    void initPictureTable();
     void on_tbl_story_cellClicked(int row, int column);
-
     void on_edit_clicked();
-
-    void on_webvotedown_clicked();
-
-    void on_webvoteup_clicked();
-
     void on_pictureUpload_clicked();
+    void on_tbl_pic_itemSelectionChanged();
 
-    void on_tabWidget_currentChanged(int index);
+    void on_pictureVoteUp_clicked();
+
+    void on_pictureVoteDown_clicked();
 
 private:
     QSystemTrayIcon *trayIcon;

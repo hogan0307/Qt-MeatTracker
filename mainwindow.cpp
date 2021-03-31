@@ -66,6 +66,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tbl_story->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
     initStoryTable();
 
+    ui->tbl_pic->setRowCount(0);
+    ui->tbl_pic->verticalHeader()->setVisible(false);
+    ui->tbl_pic->setColumnWidth(0, 40);
+    ui->tbl_pic->setColumnHidden(2, true);
+    ui->tbl_pic->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+    initPictureTable();
 }
 
 MainWindow::~MainWindow()
@@ -133,7 +139,6 @@ void MainWindow::createNewsTable(){
 
     QString query;
     query.append("CREATE TABLE IF NOT EXISTS tbl_idea(people TEXT, animal TEXT, datetime TEXT, title TEXT, idea TEXT, vote TEXT, picture TEXT)");
-
     QSqlQuery create(db);
     create.prepare(query);
 
@@ -144,6 +149,20 @@ void MainWindow::createNewsTable(){
     else
     {
         qDebug()<<"Table not exists or has not been created";
+    }
+    query.clear();
+
+    QSqlQuery create1(db);
+    query.append("CREATE TABLE IF NOT EXISTS tbl_picture(ordernum TEXT, pic_url TEXT, datetime TEXT)");
+    create1.prepare(query);
+
+    if (create1.exec())
+    {
+        qDebug()<<"Picture Table exists or has been created";
+    }
+    else
+    {
+        qDebug()<<"Picture Table not exists or has not been created";
     }
     query.clear();
 }
@@ -181,6 +200,23 @@ void MainWindow::initStoryTable()
     }
 }
 
+void MainWindow::initPictureTable()
+{
+    ui->tbl_pic->setRowCount(0);
+    QString strQuery = "SELECT * FROM tbl_picture ORDER BY ordernum";
+    QSqlQuery query(db);
+    if(query.exec(strQuery)){
+        int row = 0;
+        while(query.next()){
+            ui->tbl_pic->insertRow(row);
+            ui->tbl_pic->setItem(row, 0, new QTableWidgetItem(QString::number(row + 1)));
+            ui->tbl_pic->setItem(row, 1, new QTableWidgetItem(query.value(1).toString()));
+            ui->tbl_pic->setItem(row, 2, new QTableWidgetItem(query.value(2).toString()));
+            row++;
+        }
+    }
+}
+
 void MainWindow::on_tbl_story_cellClicked(int row, int column)
 {
     QString strQuery = "SELECT * FROM tbl_idea WHERE datetime = '" + ui->tbl_story->item(row, 0)->text() + "'";
@@ -209,25 +245,6 @@ void MainWindow::on_edit_clicked()
     ui->txt_storyidea->setPlainText(ui->txt_idea->toPlainText());
 }
 
-void MainWindow::on_webvotedown_clicked()
-{
-    QString strQuery = "UPDATE tbl_idea SET vote = 'down' WHERE datetime = '";
-            strQuery += ui->tbl_story->item(ui->tbl_story->currentRow(), 0)->text() + "'";
-    qDebug()<<strQuery;
-    QSqlQuery query(db);
-    query.exec(strQuery);
-    initStoryTable();
-}
-
-void MainWindow::on_webvoteup_clicked()
-{
-    QString strQuery = "UPDATE tbl_idea SET vote = 'up' WHERE datetime = '";
-            strQuery += ui->tbl_story->item(ui->tbl_story->currentRow(), 0)->text() + "'";
-    QSqlQuery query(db);
-    query.exec(strQuery);
-    initStoryTable();
-}
-
 void MainWindow::on_pictureUpload_clicked()
 {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
@@ -236,31 +253,90 @@ void MainWindow::on_pictureUpload_clicked()
     QPixmap pixmap(fileName);
     ui->lbl_pic->setPixmap(pixmap.scaled(ui->lbl_pic->width(), ui->lbl_pic->height(), Qt::KeepAspectRatio));
 
-    QString strQuery = "UPDATE tbl_idea SET picture = '" + fileName + "' WHERE datetime = '";
-            strQuery += ui->tbl_story->item(ui->tbl_story->currentRow(), 0)->text() + "'";
-    qDebug()<<strQuery;
-    QSqlQuery query(db);
-    query.exec(strQuery);
-}
-
-void MainWindow::on_tabWidget_currentChanged(int index)
-{
-    if(index == 1)
-        initStoryTable();
-    else if(index == 2)
+    int rowCount = 0;
+    QSqlQuery selectQuery(db);
+    if(selectQuery.exec("SELECT * FROM tbl_picture"))
     {
-        QString filename;
-        if(ui->tbl_story->currentRow() == -1)
-            ui->tbl_story->selectRow(0);
+        while(selectQuery.next())
+        {
+            rowCount++;
+        }
+    }
 
-        QString strQuery = "SELECT picture FROM tbl_idea WHERE datetime = '" + ui->tbl_story->item(ui->tbl_story->currentRow(), 0)->text() + "'";
-        QSqlQuery query(db);
-        if(query.exec(strQuery)){
-            while(query.next()){
-                filename = query.value(0).toString();
+    int maxOrderVal = 0;
+    if(rowCount > 0)
+    {
+        QString strMaxQuery = "SELECT MAX(ordernum) FROM tbl_picture";
+        QSqlQuery maxQuery(db);
+        if(maxQuery.exec(strMaxQuery))
+        {
+            while(maxQuery.next())
+            {
+                maxOrderVal = maxQuery.value(0).toInt();
             }
         }
-        QPixmap pixmap(filename);
-        ui->lbl_pic->setPixmap(pixmap.scaled(ui->lbl_pic->width(), ui->lbl_pic->height(), Qt::KeepAspectRatio));
     }
+
+    QString strQuery = "INSERT INTO tbl_picture(ordernum, pic_url, datetime) VALUES('";
+            strQuery += QString::number(maxOrderVal + 1) + "','";
+            strQuery += fileName + "','";
+            strQuery += QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss") + "')";
+
+    qDebug()<<strQuery;
+
+    QSqlQuery insertQuery(db);
+    insertQuery.exec(strQuery);
+
+    initPictureTable();
+}
+
+void MainWindow::on_tbl_pic_itemSelectionChanged()
+{
+    QString fileName = ui->tbl_pic->item(ui->tbl_pic->currentRow(), 1)->text();
+    QPixmap pixmap(fileName);
+    ui->lbl_pic->setPixmap(pixmap.scaled(ui->lbl_pic->width(), ui->lbl_pic->height(), Qt::KeepAspectRatio));
+}
+
+void MainWindow::on_pictureVoteUp_clicked()
+{
+    if(ui->tbl_pic->currentRow() == 0)
+        return;
+
+    QString strQuery2 = "UPDATE tbl_picture SET ordernum = '";
+            strQuery2 += QString::number(ui->tbl_pic->item(ui->tbl_pic->currentRow(), 0)->text().toInt()-1) + "' ";
+            strQuery2 += "WHERE ordernum = '" + QString::number(ui->tbl_pic->item(ui->tbl_pic->currentRow(), 0)->text().toInt()-2) + "'";
+    QSqlQuery query2(db);
+    query2.exec(strQuery2);
+
+    QString strQuery1 = "UPDATE tbl_picture SET ordernum = '";
+            strQuery1 += QString::number(ui->tbl_pic->item(ui->tbl_pic->currentRow(), 0)->text().toInt()-2) + "' ";
+            strQuery1 += "WHERE datetime = '" + ui->tbl_pic->item(ui->tbl_pic->currentRow(), 2)->text() + "'";
+    QSqlQuery query1(db);
+    query1.exec(strQuery1);
+
+    QString curl = ui->tbl_pic->item(ui->tbl_pic->currentRow(),1)->text();
+    ui->tbl_pic->item(ui->tbl_pic->currentRow(),1)->setText(ui->tbl_pic->item(ui->tbl_pic->currentRow()-1,1)->text());
+    ui->tbl_pic->item(ui->tbl_pic->currentRow()-1,1)->setText(curl);
+}
+
+void MainWindow::on_pictureVoteDown_clicked()
+{
+    if(ui->tbl_pic->currentRow() == ui->tbl_pic->rowCount() - 1)
+        return;
+
+    QString strQuery2 = "UPDATE tbl_picture SET ordernum = '";
+            strQuery2 += QString::number(ui->tbl_pic->item(ui->tbl_pic->currentRow(), 0)->text().toInt()-1) + "' ";
+            strQuery2 += "WHERE ordernum = '" + QString::number(ui->tbl_pic->item(ui->tbl_pic->currentRow(), 0)->text().toInt()) + "'";
+    QSqlQuery query2(db);
+    query2.exec(strQuery2);
+
+    QString strQuery1 = "UPDATE tbl_picture SET ordernum = '";
+            strQuery1 += QString::number(ui->tbl_pic->item(ui->tbl_pic->currentRow(), 0)->text().toInt()) + "' ";
+            strQuery1 += "WHERE datetime = '" + ui->tbl_pic->item(ui->tbl_pic->currentRow(), 2)->text() + "'";
+    QSqlQuery query1(db);
+    query1.exec(strQuery1);
+
+    QString curl = ui->tbl_pic->item(ui->tbl_pic->currentRow(),1)->text();
+    ui->tbl_pic->item(ui->tbl_pic->currentRow(),1)->setText(ui->tbl_pic->item(ui->tbl_pic->currentRow()+1,1)->text());
+    ui->tbl_pic->item(ui->tbl_pic->currentRow()+1,1)->setText(curl);
 }

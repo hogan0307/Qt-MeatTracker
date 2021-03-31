@@ -81,11 +81,16 @@ public:
     QWidget *tab_3;
     QGridLayout *gridLayout_7;
     QPushButton *pictureInspire;
-    QPushButton *pictureRandom;
+    QPushButton *pictureVoteDown;
+    QTableWidget *tbl_pic;
     QPushButton *pictureVoteUp;
     QPushButton *pictureUpload;
-    QPushButton *pictureVoteDown;
+    QPushButton *pictureRandom;
+    QWidget *widget_8;
+    QHBoxLayout *horizontalLayout_12;
+    QSpacerItem *horizontalSpacer_10;
     QLabel *lbl_pic;
+    QSpacerItem *horizontalSpacer_11;
     QWidget *tab_9;
     QGridLayout *gridLayout_10;
     QPushButton *pushButton;
@@ -340,32 +345,66 @@ public:
         pictureInspire = new QPushButton(tab_3);
         pictureInspire->setObjectName(QString::fromUtf8("pictureInspire"));
 
-        gridLayout_7->addWidget(pictureInspire, 2, 0, 1, 1);
-
-        pictureRandom = new QPushButton(tab_3);
-        pictureRandom->setObjectName(QString::fromUtf8("pictureRandom"));
-
-        gridLayout_7->addWidget(pictureRandom, 2, 1, 1, 1);
-
-        pictureVoteUp = new QPushButton(tab_3);
-        pictureVoteUp->setObjectName(QString::fromUtf8("pictureVoteUp"));
-
-        gridLayout_7->addWidget(pictureVoteUp, 1, 0, 1, 2);
-
-        pictureUpload = new QPushButton(tab_3);
-        pictureUpload->setObjectName(QString::fromUtf8("pictureUpload"));
-
-        gridLayout_7->addWidget(pictureUpload, 2, 2, 1, 1);
+        gridLayout_7->addWidget(pictureInspire, 5, 0, 1, 1);
 
         pictureVoteDown = new QPushButton(tab_3);
         pictureVoteDown->setObjectName(QString::fromUtf8("pictureVoteDown"));
 
-        gridLayout_7->addWidget(pictureVoteDown, 1, 2, 1, 1);
+        gridLayout_7->addWidget(pictureVoteDown, 2, 2, 1, 1);
 
-        lbl_pic = new QLabel(tab_3);
+        tbl_pic = new QTableWidget(tab_3);
+        if (tbl_pic->columnCount() < 3)
+            tbl_pic->setColumnCount(3);
+        QTableWidgetItem *__qtablewidgetitem5 = new QTableWidgetItem();
+        tbl_pic->setHorizontalHeaderItem(0, __qtablewidgetitem5);
+        QTableWidgetItem *__qtablewidgetitem6 = new QTableWidgetItem();
+        tbl_pic->setHorizontalHeaderItem(1, __qtablewidgetitem6);
+        QTableWidgetItem *__qtablewidgetitem7 = new QTableWidgetItem();
+        tbl_pic->setHorizontalHeaderItem(2, __qtablewidgetitem7);
+        tbl_pic->setObjectName(QString::fromUtf8("tbl_pic"));
+        tbl_pic->setMaximumSize(QSize(16777215, 300));
+        tbl_pic->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        tbl_pic->setSelectionBehavior(QAbstractItemView::SelectRows);
+
+        gridLayout_7->addWidget(tbl_pic, 0, 0, 1, 3);
+
+        pictureVoteUp = new QPushButton(tab_3);
+        pictureVoteUp->setObjectName(QString::fromUtf8("pictureVoteUp"));
+
+        gridLayout_7->addWidget(pictureVoteUp, 2, 0, 1, 2);
+
+        pictureUpload = new QPushButton(tab_3);
+        pictureUpload->setObjectName(QString::fromUtf8("pictureUpload"));
+
+        gridLayout_7->addWidget(pictureUpload, 5, 2, 1, 1);
+
+        pictureRandom = new QPushButton(tab_3);
+        pictureRandom->setObjectName(QString::fromUtf8("pictureRandom"));
+
+        gridLayout_7->addWidget(pictureRandom, 5, 1, 1, 1);
+
+        widget_8 = new QWidget(tab_3);
+        widget_8->setObjectName(QString::fromUtf8("widget_8"));
+        horizontalLayout_12 = new QHBoxLayout(widget_8);
+        horizontalLayout_12->setSpacing(6);
+        horizontalLayout_12->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_12->setObjectName(QString::fromUtf8("horizontalLayout_12"));
+        horizontalSpacer_10 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_12->addItem(horizontalSpacer_10);
+
+        lbl_pic = new QLabel(widget_8);
         lbl_pic->setObjectName(QString::fromUtf8("lbl_pic"));
+        lbl_pic->setMinimumSize(QSize(500, 0));
 
-        gridLayout_7->addWidget(lbl_pic, 0, 0, 1, 3);
+        horizontalLayout_12->addWidget(lbl_pic);
+
+        horizontalSpacer_11 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_12->addItem(horizontalSpacer_11);
+
+
+        gridLayout_7->addWidget(widget_8, 1, 0, 1, 3);
 
         tabWidget->addTab(tab_3, QString());
         tab_9 = new QWidget();
@@ -382,12 +421,12 @@ public:
         tableWidget_5 = new QTableWidget(tab_9);
         if (tableWidget_5->columnCount() < 3)
             tableWidget_5->setColumnCount(3);
-        QTableWidgetItem *__qtablewidgetitem5 = new QTableWidgetItem();
-        tableWidget_5->setHorizontalHeaderItem(0, __qtablewidgetitem5);
-        QTableWidgetItem *__qtablewidgetitem6 = new QTableWidgetItem();
-        tableWidget_5->setHorizontalHeaderItem(1, __qtablewidgetitem6);
-        QTableWidgetItem *__qtablewidgetitem7 = new QTableWidgetItem();
-        tableWidget_5->setHorizontalHeaderItem(2, __qtablewidgetitem7);
+        QTableWidgetItem *__qtablewidgetitem8 = new QTableWidgetItem();
+        tableWidget_5->setHorizontalHeaderItem(0, __qtablewidgetitem8);
+        QTableWidgetItem *__qtablewidgetitem9 = new QTableWidgetItem();
+        tableWidget_5->setHorizontalHeaderItem(1, __qtablewidgetitem9);
+        QTableWidgetItem *__qtablewidgetitem10 = new QTableWidgetItem();
+        tableWidget_5->setHorizontalHeaderItem(2, __qtablewidgetitem10);
         tableWidget_5->setObjectName(QString::fromUtf8("tableWidget_5"));
 
         gridLayout_10->addWidget(tableWidget_5, 1, 0, 1, 1);
@@ -601,19 +640,25 @@ public:
         webvoteup->setText(QCoreApplication::translate("MainWindow", "VoteUp", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("MainWindow", "WebStories", nullptr));
         pictureInspire->setText(QCoreApplication::translate("MainWindow", "Inspire", nullptr));
-        pictureRandom->setText(QCoreApplication::translate("MainWindow", "Random", nullptr));
+        pictureVoteDown->setText(QCoreApplication::translate("MainWindow", "VoteDown", nullptr));
+        QTableWidgetItem *___qtablewidgetitem5 = tbl_pic->horizontalHeaderItem(0);
+        ___qtablewidgetitem5->setText(QCoreApplication::translate("MainWindow", "No", nullptr));
+        QTableWidgetItem *___qtablewidgetitem6 = tbl_pic->horizontalHeaderItem(1);
+        ___qtablewidgetitem6->setText(QCoreApplication::translate("MainWindow", "Picture URL", nullptr));
+        QTableWidgetItem *___qtablewidgetitem7 = tbl_pic->horizontalHeaderItem(2);
+        ___qtablewidgetitem7->setText(QCoreApplication::translate("MainWindow", "DateTime", nullptr));
         pictureVoteUp->setText(QCoreApplication::translate("MainWindow", "VoteUp", nullptr));
         pictureUpload->setText(QCoreApplication::translate("MainWindow", "Upload", nullptr));
-        pictureVoteDown->setText(QCoreApplication::translate("MainWindow", "VoteDown", nullptr));
-        lbl_pic->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
+        pictureRandom->setText(QCoreApplication::translate("MainWindow", "Random", nullptr));
+        lbl_pic->setText(QString());
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QCoreApplication::translate("MainWindow", "Pictures", nullptr));
         pushButton->setText(QCoreApplication::translate("MainWindow", "update", nullptr));
-        QTableWidgetItem *___qtablewidgetitem5 = tableWidget_5->horizontalHeaderItem(0);
-        ___qtablewidgetitem5->setText(QCoreApplication::translate("MainWindow", "Date", nullptr));
-        QTableWidgetItem *___qtablewidgetitem6 = tableWidget_5->horizontalHeaderItem(1);
-        ___qtablewidgetitem6->setText(QCoreApplication::translate("MainWindow", "Title", nullptr));
-        QTableWidgetItem *___qtablewidgetitem7 = tableWidget_5->horizontalHeaderItem(2);
-        ___qtablewidgetitem7->setText(QCoreApplication::translate("MainWindow", "Entry", nullptr));
+        QTableWidgetItem *___qtablewidgetitem8 = tableWidget_5->horizontalHeaderItem(0);
+        ___qtablewidgetitem8->setText(QCoreApplication::translate("MainWindow", "Date", nullptr));
+        QTableWidgetItem *___qtablewidgetitem9 = tableWidget_5->horizontalHeaderItem(1);
+        ___qtablewidgetitem9->setText(QCoreApplication::translate("MainWindow", "Title", nullptr));
+        QTableWidgetItem *___qtablewidgetitem10 = tableWidget_5->horizontalHeaderItem(2);
+        ___qtablewidgetitem10->setText(QCoreApplication::translate("MainWindow", "Entry", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_9), QCoreApplication::translate("MainWindow", "News", nullptr));
         label_6->setText(QCoreApplication::translate("MainWindow", "i can do ths page later its an app about sharing ideas about curbing meat consumption using \n"
 "recipes and pictures about other food ideas", nullptr));
