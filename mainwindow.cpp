@@ -9,6 +9,7 @@
 #include <downloadmanager.h>
 #include <QDebug>
 #include <QFileDialog>
+#include <QMessageBox>
 
 QString mediadir = "./Resource/";
 
@@ -249,6 +250,9 @@ void MainWindow::on_tabWidget_currentChanged(int index)
     else if(index == 2)
     {
         QString filename;
+        if(ui->tbl_story->currentRow() == -1)
+            ui->tbl_story->selectRow(0);
+
         QString strQuery = "SELECT picture FROM tbl_idea WHERE datetime = '" + ui->tbl_story->item(ui->tbl_story->currentRow(), 0)->text() + "'";
         QSqlQuery query(db);
         if(query.exec(strQuery)){
