@@ -31,6 +31,14 @@ private slots:
 
     void on_edit_clicked();
 
+    void on_webvotedown_clicked();
+
+    void on_webvoteup_clicked();
+
+    void on_pictureUpload_clicked();
+
+    void on_tabWidget_currentChanged(int index);
+
 private:
     QSystemTrayIcon *trayIcon;
     QMenu *trayIconMenu;

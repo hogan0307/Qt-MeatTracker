@@ -12,7 +12,6 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
@@ -81,12 +80,12 @@ public:
     QPushButton *webvoteup;
     QWidget *tab_3;
     QGridLayout *gridLayout_7;
-    QPushButton *pictureVoteDown;
-    QGraphicsView *graphicsView;
     QPushButton *pictureInspire;
-    QPushButton *pictureUpload;
-    QPushButton *pictureVoteUp;
     QPushButton *pictureRandom;
+    QPushButton *pictureVoteUp;
+    QPushButton *pictureUpload;
+    QPushButton *pictureVoteDown;
+    QLabel *lbl_pic;
     QWidget *tab_9;
     QGridLayout *gridLayout_10;
     QPushButton *pushButton;
@@ -338,35 +337,35 @@ public:
         gridLayout_7->setSpacing(6);
         gridLayout_7->setContentsMargins(11, 11, 11, 11);
         gridLayout_7->setObjectName(QString::fromUtf8("gridLayout_7"));
-        pictureVoteDown = new QPushButton(tab_3);
-        pictureVoteDown->setObjectName(QString::fromUtf8("pictureVoteDown"));
-
-        gridLayout_7->addWidget(pictureVoteDown, 1, 2, 1, 1);
-
-        graphicsView = new QGraphicsView(tab_3);
-        graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
-
-        gridLayout_7->addWidget(graphicsView, 0, 0, 1, 3);
-
         pictureInspire = new QPushButton(tab_3);
         pictureInspire->setObjectName(QString::fromUtf8("pictureInspire"));
 
         gridLayout_7->addWidget(pictureInspire, 2, 0, 1, 1);
 
-        pictureUpload = new QPushButton(tab_3);
-        pictureUpload->setObjectName(QString::fromUtf8("pictureUpload"));
+        pictureRandom = new QPushButton(tab_3);
+        pictureRandom->setObjectName(QString::fromUtf8("pictureRandom"));
 
-        gridLayout_7->addWidget(pictureUpload, 2, 2, 1, 1);
+        gridLayout_7->addWidget(pictureRandom, 2, 1, 1, 1);
 
         pictureVoteUp = new QPushButton(tab_3);
         pictureVoteUp->setObjectName(QString::fromUtf8("pictureVoteUp"));
 
         gridLayout_7->addWidget(pictureVoteUp, 1, 0, 1, 2);
 
-        pictureRandom = new QPushButton(tab_3);
-        pictureRandom->setObjectName(QString::fromUtf8("pictureRandom"));
+        pictureUpload = new QPushButton(tab_3);
+        pictureUpload->setObjectName(QString::fromUtf8("pictureUpload"));
 
-        gridLayout_7->addWidget(pictureRandom, 2, 1, 1, 1);
+        gridLayout_7->addWidget(pictureUpload, 2, 2, 1, 1);
+
+        pictureVoteDown = new QPushButton(tab_3);
+        pictureVoteDown->setObjectName(QString::fromUtf8("pictureVoteDown"));
+
+        gridLayout_7->addWidget(pictureVoteDown, 1, 2, 1, 1);
+
+        lbl_pic = new QLabel(tab_3);
+        lbl_pic->setObjectName(QString::fromUtf8("lbl_pic"));
+
+        gridLayout_7->addWidget(lbl_pic, 0, 0, 1, 3);
 
         tabWidget->addTab(tab_3, QString());
         tab_9 = new QWidget();
@@ -566,7 +565,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -601,11 +600,12 @@ public:
         webvotedown->setText(QCoreApplication::translate("MainWindow", "VoteDown", nullptr));
         webvoteup->setText(QCoreApplication::translate("MainWindow", "VoteUp", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("MainWindow", "WebStories", nullptr));
-        pictureVoteDown->setText(QCoreApplication::translate("MainWindow", "VoteDown", nullptr));
         pictureInspire->setText(QCoreApplication::translate("MainWindow", "Inspire", nullptr));
-        pictureUpload->setText(QCoreApplication::translate("MainWindow", "Upload", nullptr));
-        pictureVoteUp->setText(QCoreApplication::translate("MainWindow", "VoteUp", nullptr));
         pictureRandom->setText(QCoreApplication::translate("MainWindow", "Random", nullptr));
+        pictureVoteUp->setText(QCoreApplication::translate("MainWindow", "VoteUp", nullptr));
+        pictureUpload->setText(QCoreApplication::translate("MainWindow", "Upload", nullptr));
+        pictureVoteDown->setText(QCoreApplication::translate("MainWindow", "VoteDown", nullptr));
+        lbl_pic->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QCoreApplication::translate("MainWindow", "Pictures", nullptr));
         pushButton->setText(QCoreApplication::translate("MainWindow", "update", nullptr));
         QTableWidgetItem *___qtablewidgetitem5 = tableWidget_5->horizontalHeaderItem(0);

@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[10];
-    char stringdata0[127];
+    QByteArrayData data[15];
+    char stringdata0[230];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -41,13 +41,20 @@ QT_MOC_LITERAL(5, 60, 14), // "initStoryTable"
 QT_MOC_LITERAL(6, 75, 24), // "on_tbl_story_cellClicked"
 QT_MOC_LITERAL(7, 100, 3), // "row"
 QT_MOC_LITERAL(8, 104, 6), // "column"
-QT_MOC_LITERAL(9, 111, 15) // "on_edit_clicked"
+QT_MOC_LITERAL(9, 111, 15), // "on_edit_clicked"
+QT_MOC_LITERAL(10, 127, 22), // "on_webvotedown_clicked"
+QT_MOC_LITERAL(11, 150, 20), // "on_webvoteup_clicked"
+QT_MOC_LITERAL(12, 171, 24), // "on_pictureUpload_clicked"
+QT_MOC_LITERAL(13, 196, 27), // "on_tabWidget_currentChanged"
+QT_MOC_LITERAL(14, 224, 5) // "index"
 
     },
     "MainWindow\0on_actionExit_triggered\0\0"
     "on_exit\0on_save_clicked\0initStoryTable\0"
     "on_tbl_story_cellClicked\0row\0column\0"
-    "on_edit_clicked"
+    "on_edit_clicked\0on_webvotedown_clicked\0"
+    "on_webvoteup_clicked\0on_pictureUpload_clicked\0"
+    "on_tabWidget_currentChanged\0index"
 };
 #undef QT_MOC_LITERAL
 
@@ -57,7 +64,7 @@ static const uint qt_meta_data_MainWindow[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
+      10,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -65,12 +72,16 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   44,    2, 0x08 /* Private */,
-       3,    0,   45,    2, 0x08 /* Private */,
-       4,    0,   46,    2, 0x08 /* Private */,
-       5,    0,   47,    2, 0x08 /* Private */,
-       6,    2,   48,    2, 0x08 /* Private */,
-       9,    0,   53,    2, 0x08 /* Private */,
+       1,    0,   64,    2, 0x08 /* Private */,
+       3,    0,   65,    2, 0x08 /* Private */,
+       4,    0,   66,    2, 0x08 /* Private */,
+       5,    0,   67,    2, 0x08 /* Private */,
+       6,    2,   68,    2, 0x08 /* Private */,
+       9,    0,   73,    2, 0x08 /* Private */,
+      10,    0,   74,    2, 0x08 /* Private */,
+      11,    0,   75,    2, 0x08 /* Private */,
+      12,    0,   76,    2, 0x08 /* Private */,
+      13,    1,   77,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
@@ -79,6 +90,10 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void, QMetaType::Int, QMetaType::Int,    7,    8,
     QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,   14,
 
        0        // eod
 };
@@ -95,6 +110,10 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 3: _t->initStoryTable(); break;
         case 4: _t->on_tbl_story_cellClicked((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 5: _t->on_edit_clicked(); break;
+        case 6: _t->on_webvotedown_clicked(); break;
+        case 7: _t->on_webvoteup_clicked(); break;
+        case 8: _t->on_pictureUpload_clicked(); break;
+        case 9: _t->on_tabWidget_currentChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -129,13 +148,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 10;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 6)
+        if (_id < 10)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 6;
+        _id -= 10;
     }
     return _id;
 }

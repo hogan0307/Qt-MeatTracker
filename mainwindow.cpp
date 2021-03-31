@@ -8,6 +8,7 @@
 #include <QSound>
 #include <downloadmanager.h>
 #include <QDebug>
+#include <QFileDialog>
 
 QString mediadir = "./Resource/";
 
@@ -130,7 +131,7 @@ void MainWindow::createNewsTable(){
     }
 
     QString query;
-    query.append("CREATE TABLE IF NOT EXISTS tbl_idea(people TEXT, animal TEXT, datetime TEXT, title TEXT, idea TEXT)");
+    query.append("CREATE TABLE IF NOT EXISTS tbl_idea(people TEXT, animal TEXT, datetime TEXT, title TEXT, idea TEXT, vote TEXT, picture TEXT)");
 
     QSqlQuery create(db);
     create.prepare(query);
@@ -173,6 +174,7 @@ void MainWindow::initStoryTable()
             ui->tbl_story->insertRow(row);
             ui->tbl_story->setItem(row, 0, new QTableWidgetItem(query.value(2).toString()));
             ui->tbl_story->setItem(row, 1, new QTableWidgetItem(query.value(3).toString()));
+            ui->tbl_story->setItem(row, 2, new QTableWidgetItem(query.value(5).toString()));
             row++;
         }
     }
@@ -204,4 +206,57 @@ void MainWindow::on_edit_clicked()
     query.exec(strQuery);
     initStoryTable();
     ui->txt_storyidea->setPlainText(ui->txt_idea->toPlainText());
+}
+
+void MainWindow::on_webvotedown_clicked()
+{
+    QString strQuery = "UPDATE tbl_idea SET vote = 'down' WHERE datetime = '";
+            strQuery += ui->tbl_story->item(ui->tbl_story->currentRow(), 0)->text() + "'";
+    qDebug()<<strQuery;
+    QSqlQuery query(db);
+    query.exec(strQuery);
+    initStoryTable();
+}
+
+void MainWindow::on_webvoteup_clicked()
+{
+    QString strQuery = "UPDATE tbl_idea SET vote = 'up' WHERE datetime = '";
+            strQuery += ui->tbl_story->item(ui->tbl_story->currentRow(), 0)->text() + "'";
+    QSqlQuery query(db);
+    query.exec(strQuery);
+    initStoryTable();
+}
+
+void MainWindow::on_pictureUpload_clicked()
+{
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
+                                                    QApplication::applicationDirPath(),
+                                                    tr("Sounds (*.jpg *.png *.bmp)"));
+    QPixmap pixmap(fileName);
+    ui->lbl_pic->setPixmap(pixmap.scaled(ui->lbl_pic->width(), ui->lbl_pic->height(), Qt::KeepAspectRatio));
+
+    QString strQuery = "UPDATE tbl_idea SET picture = '" + fileName + "' WHERE datetime = '";
+            strQuery += ui->tbl_story->item(ui->tbl_story->currentRow(), 0)->text() + "'";
+    qDebug()<<strQuery;
+    QSqlQuery query(db);
+    query.exec(strQuery);
+}
+
+void MainWindow::on_tabWidget_currentChanged(int index)
+{
+    if(index == 1)
+        initStoryTable();
+    else if(index == 2)
+    {
+        QString filename;
+        QString strQuery = "SELECT picture FROM tbl_idea WHERE datetime = '" + ui->tbl_story->item(ui->tbl_story->currentRow(), 0)->text() + "'";
+        QSqlQuery query(db);
+        if(query.exec(strQuery)){
+            while(query.next()){
+                filename = query.value(0).toString();
+            }
+        }
+        QPixmap pixmap(filename);
+        ui->lbl_pic->setPixmap(pixmap.scaled(ui->lbl_pic->width(), ui->lbl_pic->height(), Qt::KeepAspectRatio));
+    }
 }
